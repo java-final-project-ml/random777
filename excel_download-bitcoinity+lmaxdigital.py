@@ -33,6 +33,11 @@ TESTDATA = StringIO(html)
 bitcoinity = pd.read_csv(TESTDATA, sep=",")
 
 
+bitcoinity = bitcoinity.set_index("Time")
+
+bitcoinity.to_csv("bitcoinity_volatility_daily.csv")
+
+
 
 import urllib.request
 
@@ -45,4 +50,10 @@ with opener.open('https://www.lmaxdigital.com/dailyVolumeXLS.php') as f:
     html = io.BytesIO(f.read())
 df = pd.io.excel.read_excel(html)
 
-df["Date"] df[]
+df["Date"] = df["Date"].apply(lambda x: x.split("/")[-1] + "-" + x.split("/")[1] + "-" +  x.split("/")[0] )
+
+df = df.set_index("Date")
+
+df.to_csv("lmax.csv")
+
+
